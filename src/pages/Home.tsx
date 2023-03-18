@@ -5,10 +5,41 @@ import { Votes } from '../types/votes';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
+import { toast } from 'react-toastify';
 
 function Home({ user }: { user: any | undefined }) {
   moment.locale('id');
   const [votes, setVotes] = useState<Votes[]>([]);
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Yakin akan menghapus voting?')) return;
+    try {
+      await axios.delete(`http://localhost:3000/api/votes/${id}`);
+      toast.success('Voting berhasil dihapus!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      getVotes();
+    } catch (error: any) {
+      toast.error('Hmm ada yang salah dari server', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      console.log(error.message);
+    }
+  };
 
   const getVotes = async () => {
     try {
@@ -82,7 +113,7 @@ function Home({ user }: { user: any | undefined }) {
                         />
                       </svg>
                     </div>
-                    <div>
+                    <div onClick={() => handleDelete(vote.code)}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                         <path
                           fillRule="evenodd"

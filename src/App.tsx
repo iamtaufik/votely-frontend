@@ -5,6 +5,10 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Restricted from './pages/Restricted';
 import Create from './pages/Create';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Participant from './pages/Participant';
+import Vote from './pages/Vote';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -44,8 +48,36 @@ function App() {
               )
             }
           />
+          <Route path="participant">
+            <Route
+              index
+              element={
+                user ? (
+                  <>
+                    <Participant />
+                  </>
+                ) : (
+                  <Restricted />
+                )
+              }
+            />
+            <Route
+              path=":code"
+              element={
+                user ? (
+                  <>
+                    <Navbar user={user} />
+                    <Vote />
+                  </>
+                ) : (
+                  <Restricted />
+                )
+              }
+            />
+          </Route>
         </Route>
       </Routes>
+      <ToastContainer />
     </div>
   );
 }
