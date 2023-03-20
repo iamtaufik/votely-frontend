@@ -67,7 +67,7 @@ function App() {
                 user ? (
                   <>
                     <Navbar user={user} />
-                    <Vote />
+                    <Vote user={user} />
                   </>
                 ) : (
                   <Restricted />
