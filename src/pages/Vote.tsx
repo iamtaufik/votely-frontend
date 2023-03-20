@@ -1,21 +1,21 @@
-import axios from 'axios';
-import moment from 'moment';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import CountDown from '../components/CountDown';
-import { Votes } from '../types/votes';
+import axios from "axios";
+import moment from "moment";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import CountDown from "../components/CountDown";
+import { Votes } from "../types/votes";
 
-export const STATE_NOT_STARTED = 'STATE_NOT_STARTED',
-  STATE_STARTED = 'STATE_STARTED',
-  STATE_ENDED = 'STATE_ENDED',
-  STATE_LOADING = 'STATE_LOADING';
+export const STATE_NOT_STARTED = "STATE_NOT_STARTED",
+  STATE_STARTED = "STATE_STARTED",
+  STATE_ENDED = "STATE_ENDED",
+  STATE_LOADING = "STATE_LOADING";
 
 const Vote = ({ user }: { user: any | undefined }) => {
   const [vote, setVote] = useState<Votes>();
   const { code } = useParams();
   const navigate = useNavigate();
   const [currentState, setCurrentState] = useState(STATE_LOADING);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -27,7 +27,7 @@ const Vote = ({ user }: { user: any | undefined }) => {
       setVote(data.result);
     } catch (error: any) {
       if (error.response?.data.code === 404) {
-        navigate('/');
+        navigate("/");
       }
       console.error(error.message);
     }
@@ -36,12 +36,12 @@ const Vote = ({ user }: { user: any | undefined }) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/participant', {
+      await axios.post("http://localhost:3000/api/participant", {
         // email: user.email[0].value,
         candidate: selectedOption,
         code: code,
       });
-      navigate('/');
+      navigate("/");
     } catch (error: any) {
       console.error(error.message);
     }
@@ -96,7 +96,11 @@ const Vote = ({ user }: { user: any | undefined }) => {
               <p>{c.name}</p>
               <p>{c.votes}</p>
             </div>
-            <input type="radio" value={c.name} checked={selectedOption === c.name} onChange={handleOptionChange} />
+            {/* <input type="radio" value={c.name} checked={selectedOption === c.name} onChange={handleOptionChange} /> */}
+            <label className="container">
+              <input className="pilih" type="checkbox" value={c.name} checked={selectedOption === c.name} onChange={handleOptionChange} />
+              <div className="checkmark"></div>
+            </label>
           </div>
         ))}
         {user.emails[0].value !== vote?.publisher && <button type="submit">Kirim</button>}
