@@ -33,11 +33,16 @@ const Participant = () => {
 
   return (
     <div className=" flex justify-center items-center flex-col">
-      <img src={workTogetherBg} alt="Work Together " className="w-[300px] h-[300px]" />
-      <h1>Ikut Voting</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="code" id="code" placeholder="Kode Voting" onChange={(e) => setCode(e.target.value)} />
-        <button type="submit">Gabung</button>
+      <img src={workTogetherBg} alt="Work Together " className="w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]" />
+      <div className="my-2 text-center text-[#3C3C3C]">
+        <h1 className="text-3xl font-semibold ">Ikut Voting</h1>
+        <p className="text-base">Kamu bisa melakukan voting jika mempunyai kode voting yang deberikan oleh penyelengara</p>
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4">
+        <input type="text" name="code" id="code" placeholder="Kode Voting" onChange={(e) => setCode(e.target.value)} className="border-[#4A1B9D] border-2 py-2 px-2" />
+        <button type="submit" className="w-1/2 bg-[#4A1B9D] text-white font-normal py-2">
+          Gabung
+        </button>
       </form>
     </div>
   );
