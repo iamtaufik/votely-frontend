@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ user }: { user: any | undefined }) => {
   const handleLogin = async () => {
     try {
-      window.open("http://localhost:3000/api/auth/google", "_self");
+      window.open('http://localhost:3000/api/auth/google', '_self');
     } catch (error: any) {
       console.log(error.message);
     }
@@ -11,13 +11,13 @@ const Navbar = ({ user }: { user: any | undefined }) => {
 
   const handleLogout = async () => {
     try {
-      window.open("http://localhost:3000/api/auth/logout", "_self");
+      window.open('http://localhost:3000/api/auth/logout', '_self');
       // getUser();
     } catch (error: any) {
       console.log(error.message);
     }
   };
-  console.log("navbar", user);
+  console.log('navbar', user);
   return (
     <nav className="flex py-4 justify-between items-center">
       <Link to="/" className="text-[#4A1B9D] font-bold text-xl">
@@ -35,9 +35,9 @@ const Navbar = ({ user }: { user: any | undefined }) => {
           </button>
         ) : (
           <>
-            <a className="px-4 py-2 rounded-sm text-white text-base font-semibold">
-              <img src={`${user.photos[0].value}`} style={{ width: "45px" }} className="rounded-full" />
-            </a>
+            <div className="px-4 py-2 rounded-sm text-white text-base font-semibold">
+              <img src={`${user.photos[0].value}`} style={{ width: '45px' }} className="rounded-full" />
+            </div>
             <button className="bg-[#4A1B9D] px-4 py-2 rounded-sm text-white text-base font-semibold" onClick={() => handleLogout()}>
               Logout
             </button>

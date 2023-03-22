@@ -5,7 +5,7 @@
 :root {
   --toastify-color-success: #4a1b9d;
 }
-.container .pilih {
+/* .container .pilih {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -65,4 +65,4 @@
     transform: translate(0, 0) rotate(45deg);
     opacity: 1;
   }
-}
+} */
