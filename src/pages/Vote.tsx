@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { ChangeEvent, ErrorInfo, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CountDown from '../components/CountDown';
 import { Votes } from '../types/votes';
@@ -16,7 +16,6 @@ const Vote = ({ user }: { user: any | undefined }) => {
   const navigate = useNavigate();
   const [currentState, setCurrentState] = useState(STATE_LOADING);
   const [selectedOption, setSelectedOption] = useState('');
-  const [isVote, setIsVote] = useState<boolean>(false);
 
   const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -50,6 +49,7 @@ const Vote = ({ user }: { user: any | undefined }) => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:3000/api/participant', {
+        // email: user.email[0].value,
         candidate: selectedOption,
         code: code,
       });
@@ -108,7 +108,7 @@ const Vote = ({ user }: { user: any | undefined }) => {
               <p>{c.name}</p>
               <p>{c.votes}</p>
             </div>
-            <input type="radio" value={c.name} checked={selectedOption === c.name} disabled={user.emails[0].value === vote?.publisher || isVote} onChange={handleOptionChange} />
+            <input type="radio" value={c.name} checked={selectedOption === c.name} onChange={handleOptionChange} />
           </div>
         ))}
         {user.emails[0].value !== vote?.publisher && !isVote && <button type="submit">Kirim</button>}
