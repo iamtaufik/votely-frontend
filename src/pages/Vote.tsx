@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, ErrorInfo, FormEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CountDown from '../components/CountDown';
 import { Votes } from '../types/votes';
@@ -16,6 +16,7 @@ const Vote = ({ user }: { user: any | undefined }) => {
   const navigate = useNavigate();
   const [currentState, setCurrentState] = useState(STATE_LOADING);
   const [selectedOption, setSelectedOption] = useState('');
+  const [isVote, setIsVote] = useState<boolean>(false);
 
   const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -33,11 +34,22 @@ const Vote = ({ user }: { user: any | undefined }) => {
     }
   };
 
+  const getParticipantVote = async (code: string) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/api/participant/${code}`);
+      if (!data.result) return setIsVote(false);
+      setIsVote(true);
+      console.log(data.result);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:3000/api/participant', {
-        // email: user.email[0].value,
         candidate: selectedOption,
         code: code,
       });
@@ -49,7 +61,6 @@ const Vote = ({ user }: { user: any | undefined }) => {
 
   useEffect(() => {
     if (vote) {
-      // Check State by Event Time
       if (currentState === STATE_ENDED) {
         return;
       }
@@ -83,12 +94,13 @@ const Vote = ({ user }: { user: any | undefined }) => {
 
   useEffect(() => {
     getVote(String(code));
+    getParticipantVote(String(code));
   }, []);
 
   return (
     <div>
       {vote?.startDateTime && vote?.endDateTime && <CountDown start={vote?.startDateTime} end={vote?.endDateTime} currentState={currentState} />}
-      {/* <select name="" id=""></select> */}
+      {isVote && <p>Kamu sudah melakukan voting</p>}
       <form onSubmit={handleSubmit}>
         {vote?.candidates.map((c, index) => (
           <div key={index}>
@@ -96,10 +108,10 @@ const Vote = ({ user }: { user: any | undefined }) => {
               <p>{c.name}</p>
               <p>{c.votes}</p>
             </div>
-            <input type="radio" value={c.name} checked={selectedOption === c.name} onChange={handleOptionChange} />
+            <input type="radio" value={c.name} checked={selectedOption === c.name} disabled={user.emails[0].value === vote?.publisher || isVote} onChange={handleOptionChange} />
           </div>
         ))}
-        {user.emails[0].value !== vote?.publisher && <button type="submit">Kirim</button>}
+        {user.emails[0].value !== vote?.publisher && !isVote && <button type="submit">Kirim</button>}
       </form>
       {user.emails[0].value === vote?.publisher && <p className="text-red-500 text-center py-2 px-3">Pembuat vote tidak dapat melakukan voting</p>}
     </div>
