@@ -1,41 +1,41 @@
-import votingBg from '../assets/voting-bg.svg';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Votes } from '../types/votes';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import 'moment/locale/id';
-import { toast } from 'react-toastify';
+import votingBg from "../assets/voting-bg.svg";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { Votes } from "../types/votes";
+import { useEffect, useState } from "react";
+import moment from "moment";
+import "moment/locale/id";
+import { toast } from "react-toastify";
 
 function Home({ user }: { user: any | undefined }) {
-  moment.locale('id');
+  moment.locale("id");
   const [votes, setVotes] = useState<Votes[]>([]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Yakin akan menghapus voting?')) return;
+    if (!confirm("Yakin akan menghapus voting?")) return;
     try {
       await axios.delete(`http://localhost:3000/api/votes/${id}`);
-      toast.success('Voting berhasil dihapus!', {
-        position: 'top-right',
+      toast.success("Voting berhasil dihapus!", {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
       getVotes();
     } catch (error: any) {
-      toast.error('Hmm ada yang salah dari server', {
-        position: 'top-right',
+      toast.error("Hmm ada yang salah dari server", {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
       console.log(error.message);
     }
@@ -43,7 +43,7 @@ function Home({ user }: { user: any | undefined }) {
 
   const getVotes = async () => {
     try {
-      const result = await axios.get('http://localhost:3000/api/votes');
+      const result = await axios.get("http://localhost:3000/api/votes");
       console.log(result.data);
       setVotes(result.data.result);
     } catch (error: any) {
@@ -93,7 +93,9 @@ function Home({ user }: { user: any | undefined }) {
             <tbody>
               {votes.length === 0 && (
                 <tr>
-                  <td>Belum ada data</td>
+                  <td>
+                    <p className="flex justify-center">Belum Ada Data</p>
+                  </td>
                 </tr>
               )}
               {votes.map((vote, index) => (
@@ -101,8 +103,8 @@ function Home({ user }: { user: any | undefined }) {
                   <td className="text-center">{index + 1}</td>
                   <td className="text-center">{vote.title}</td>
                   <td className="text-center">{vote.code}</td>
-                  <td className="text-center"> {moment(vote.startDateTime).format('LLLL')}</td>
-                  <td className="text-center">{moment(vote.endDateTime).format('DD MMM YYYY hh:mm a')}</td>
+                  <td className="text-center"> {moment(vote.startDateTime).format("LLLL")}</td>
+                  <td className="text-center">{moment(vote.endDateTime).format("DD MMM YYYY hh:mm a")}</td>
                   <td className="flex flex-col items-center justify-center">
                     <div>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
