@@ -1,23 +1,23 @@
-import axios from 'axios';
-import moment from 'moment';
-import { FormEvent, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import CountDown from '../components/CountDown';
-import { User } from '../types/user';
-import { Votes } from '../types/votes';
+import axios from "axios";
+import moment from "moment";
+import { FormEvent, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import CountDown from "../components/CountDown";
+import { User } from "../types/user";
+import { Votes } from "../types/votes";
 
-export const STATE_NOT_STARTED = 'STATE_NOT_STARTED',
-  STATE_STARTED = 'STATE_STARTED',
-  STATE_ENDED = 'STATE_ENDED',
-  STATE_LOADING = 'STATE_LOADING';
+export const STATE_NOT_STARTED = "STATE_NOT_STARTED",
+  STATE_STARTED = "STATE_STARTED",
+  STATE_ENDED = "STATE_ENDED",
+  STATE_LOADING = "STATE_LOADING";
 
 const Vote = ({ user }: { user: User | undefined }) => {
   const [vote, setVote] = useState<Votes>();
   const { code } = useParams();
   const navigate = useNavigate();
   const [currentState, setCurrentState] = useState(STATE_LOADING);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
   const [isVote, setIsVote] = useState<boolean>(false);
 
   const handleOptionChange = (candidate: string) => {
@@ -30,7 +30,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
       setVote(data.result);
     } catch (error: any) {
       if (error.response?.data.code === 404) {
-        navigate('/');
+        navigate("/");
       }
       console.error(error.message);
     }
@@ -50,26 +50,26 @@ const Vote = ({ user }: { user: User | undefined }) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (selectedOption === '') {
-      toast.error('Pilih salah satu kandidat', {
-        position: 'top-right',
+    if (selectedOption === "") {
+      toast.error("Pilih salah satu kandidat", {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
       return;
     }
     try {
-      await axios.post('http://localhost:3000/api/participant', {
+      await axios.post("http://localhost:3000/api/participant", {
         // email: user.email[0].value,
         candidate: selectedOption,
         code: code,
       });
-      navigate('/');
+      navigate("/");
     } catch (error: any) {
       console.error(error.message);
     }
@@ -116,7 +116,11 @@ const Vote = ({ user }: { user: User | undefined }) => {
   return (
     <div>
       {vote?.startDateTime && vote?.endDateTime && <CountDown start={vote?.startDateTime} end={vote?.endDateTime} currentState={currentState} />}
-      {isVote && <p>Kamu sudah melakukan voting</p>}
+      {isVote && (
+        <p className="flex justify-center" style={{ paddingTop: "3em", paddingBottom: "3em" }}>
+          Kamu sudah melakukan voting
+        </p>
+      )}
       <div className="flex justify-center">
         <form onSubmit={handleSubmit}>
           {vote?.candidates.map((c, index) => (
@@ -126,7 +130,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
                 <p>{c.votes}</p>
               </div>
               {user?.emails[0].value !== vote?.publisher && !isVote && (
-                <div className={selectedOption === c.name ? 'text-[#4A1B9D]' : 'text-[#3C3C3C]'} onClick={() => handleOptionChange(c.name)}>
+                <div className={selectedOption === c.name ? "text-[#4A1B9D]" : "text-[#3C3C3C]"} onClick={() => handleOptionChange(c.name)}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-20 h-20">
                     <path
                       fillRule="evenodd"
@@ -138,7 +142,11 @@ const Vote = ({ user }: { user: User | undefined }) => {
               )}
             </div>
           ))}
-          {user?.emails[0].value !== vote?.publisher && !isVote && <button type="submit">Kirim</button>}
+          {user?.emails[0].value !== vote?.publisher && !isVote && (
+            <button type="submit" className="bg-[#4A1B9D] px-4 py-2 rounded-sm text-white text-base font-semibold">
+              Kirim
+            </button>
+          )}
         </form>
       </div>
       {user?.emails[0].value === vote?.publisher && <p className="text-red-500 text-center py-2 px-3">Pembuat vote tidak dapat melakukan voting</p>}
