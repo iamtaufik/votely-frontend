@@ -15,7 +15,7 @@ export default function CountDown(props: Props) {
   };
 
   return (
-    <div className=" mt-10 text-center">
+    <div className=" mt-4 text-center">
       {/* Timer */}
 
       {props.currentState === STATE_LOADING && <>Tunggu Sebentar...</>}

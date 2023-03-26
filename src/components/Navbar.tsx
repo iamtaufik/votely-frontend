@@ -17,7 +17,6 @@ const Navbar = ({ user }: { user: any | undefined }) => {
       console.log(error.message);
     }
   };
-  console.log('navbar', user);
   return (
     <nav className="flex py-4 justify-between items-center">
       <Link to="/" className="text-[#4A1B9D] font-bold text-xl">
