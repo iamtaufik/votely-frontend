@@ -5,11 +5,13 @@ import { toast } from 'react-toastify';
 import workTogetherBg from '../assets/work-together.svg';
 
 const Participant = () => {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState<string>('');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.get(`http://localhost:3000/api/votes/${code}`);
 
@@ -28,6 +30,8 @@ const Participant = () => {
         });
       }
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,7 +45,7 @@ const Participant = () => {
       <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4">
         <input type="text" name="code" id="code" placeholder="Kode Voting" onChange={(e) => setCode(e.target.value)} className="border-[#4A1B9D] border-2 py-2 px-2" />
         <button type="submit" className="w-1/2 bg-[#4A1B9D] text-white font-normal py-2">
-          Gabung
+          {loading ? 'Loading...' : 'Gabung'}
         </button>
       </form>
     </div>
