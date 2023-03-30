@@ -22,12 +22,8 @@ const Navbar = ({ user }: { user: any | undefined }) => {
       <Link to="/" className="text-[#4A1B9D] font-bold text-xl">
         Votely
       </Link>
-      <div className="flex gap-2 items-center lg:gap-4">
-        {user && (
-          <p className=" text-[#3C3C3C] text-sm lg:text-base ">
-            Welcome, <br className="md:hidden" /> {user.displayName}
-          </p>
-        )}
+      <div className="flex items-center lg:gap-4">
+        {user && <p className=" text-[#3C3C3C] text-sm  lg:text-base ml-10">Welcome, {user.displayName}</p>}
         {user === null ? (
           <button className="bg-[#4A1B9D] px-4 py-2 rounded-sm text-white text-base font-semibold" onClick={() => handleLogin()}>
             Login
@@ -35,7 +31,7 @@ const Navbar = ({ user }: { user: any | undefined }) => {
         ) : (
           <>
             <div className="px-4 py-2 rounded-sm text-white text-base font-semibold">
-              <img src={`${user.photos[0].value}`} style={{ width: '45px' }} className="rounded-full" />
+              <img src={`${user.photos[0].value}`} className="rounded-full w-10  hidden lg:flex" />
             </div>
             <button className="bg-[#4A1B9D] px-4 py-2 rounded-sm text-white text-base font-semibold" onClick={() => handleLogout()}>
               Logout
