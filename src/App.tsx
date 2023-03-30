@@ -21,7 +21,6 @@ function App() {
   useEffect(() => {
     getUser();
   }, []);
-  console.log(user);
   return (
     <div className="container bg-white">
       <Routes>

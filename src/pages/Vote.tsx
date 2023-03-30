@@ -125,14 +125,14 @@ const Vote = ({ user }: { user: User | undefined }) => {
           <div className="flex justify-center lg:w-1/3 my-4 w-full">
             <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
               {vote?.candidates.map((c, index) => (
-                <div key={index} className="flex border border-gray-200 rounded-md justify-between px-4 py-2 items-center dark:divide-gray-700  dark:border-gray-700">
+                <div key={index} className="flex border border-gray-200 rounded-md justify-between px-4 py-2 items-center  ">
                   <div className="w-full flex flex-col gap-2">
                     <div>
                       <h3 className="text-xl font-semibold text-[#3C3C3C]">{c.name}</h3>
                       <p>Kandidat {index + 1}</p>
                     </div>
 
-                    <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                    <div className="w-full bg-gray-200 rounded-full h-2 ">
                       <div className="bg-[#4A1B9D] h-2 rounded-full" style={{ width: `${c.votes}%` }}></div>
                     </div>
                   </div>

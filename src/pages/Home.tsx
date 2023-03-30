@@ -14,35 +14,40 @@ function Home({ user }: { user: any | undefined }) {
   const [votes, setVotes] = useState<Votes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleDelete = async (id: string) => {
-    ShowModal();
-    if (!confirm('Yakin akan menghapus voting?')) return;
-    try {
-      await axios.delete(`http://localhost:3000/api/votes/${id}`);
-      toast.success('Voting berhasil dihapus!', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-      getVotes();
-    } catch (error: any) {
-      toast.error('Hmm ada yang salah dari server', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-      console.log(error.message);
-    }
+  const handleDelete = (id: string) => {
+    ShowModal({
+      title: 'Yakin akan menghapus?',
+      positiveText: 'Ya',
+      negativeText: 'Tidak',
+      async onPositiveClick() {
+        try {
+          await axios.delete(`http://localhost:3000/api/votes/${id}`);
+          toast.success('Voting berhasil dihapus!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          });
+          getVotes();
+        } catch (error: any) {
+          toast.error('Hmm ada yang salah dari server', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          });
+          console.log(error.message);
+        }
+      },
+    });
   };
 
   const getVotes = async () => {
@@ -111,7 +116,7 @@ function Home({ user }: { user: any | undefined }) {
             <tbody>
               {votes.length === 0 && <tr>belum ada data</tr>}
               {votes.map((vote, index) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr className="bg-white border-b   hover:bg-gray-50 ">
                   <td className="w-4 p-4 text-center">{index + 1}</td>
                   <td className="px-6 py-4 text-center">{vote.title}</td>
                   <th scope="row" className="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
