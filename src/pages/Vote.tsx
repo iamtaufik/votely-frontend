@@ -127,9 +127,14 @@ const Vote = ({ user }: { user: User | undefined }) => {
               {vote?.candidates.map((c, index) => (
                 <div key={index} className="flex border border-gray-200 rounded-md justify-between px-4 py-2 items-center  ">
                   <div className="w-full flex flex-col gap-2">
-                    <div>
-                      <h3 className="text-xl font-semibold text-[#3C3C3C]">{c.name}</h3>
-                      <p>Kandidat {index + 1}</p>
+                    <h3 className="text-xl font-semibold text-[#3C3C3C]">{c.name}</h3>
+                    <div className="flex justify-between">
+                      <div>
+                        <p>Kandidat {index + 1}</p>
+                      </div>
+                      <div>
+                        <p>{c.votes} Vote</p>
+                      </div>
                     </div>
 
                     <div className="w-full bg-gray-200 rounded-full h-2 ">
@@ -148,7 +153,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
                   </div>
                 </div>
               ))}
-              {user?.emails[0].value !== vote?.publisher && !isVote && (
+              {user?.emails[0].value !== vote?.publisher && !isVote && currentState !== STATE_ENDED && (
                 <button type="submit" className="bg-[#4A1B9D] px-4 py-2 rounded-sm text-white text-base font-semibold">
                   Kirim
                 </button>
