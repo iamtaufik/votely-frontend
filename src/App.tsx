@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   const getUser = async () => {
-    const user = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/auth/login/success`);
+    const user = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/auth/login/success`);
     setUser(user.data.user);
   };
 
