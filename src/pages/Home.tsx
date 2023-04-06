@@ -21,7 +21,7 @@ function Home({ user }: { user: any | undefined }) {
       negativeText: 'Tidak',
       async onPositiveClick() {
         try {
-          await axios.delete(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/votes/${id}`);
+          await axios.delete(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/votes/${id}`);
           toast.success('Voting berhasil dihapus!', {
             position: 'top-right',
             autoClose: 3000,
@@ -53,7 +53,7 @@ function Home({ user }: { user: any | undefined }) {
   const getVotes = async () => {
     setLoading(true);
     try {
-      const result = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/votes`);
+      const result = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/votes`);
       setVotes(result.data.result);
     } catch (error: any) {
       console.log(error.message);

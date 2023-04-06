@@ -27,7 +27,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
 
   const getVote = async (code: string) => {
     try {
-      const { data } = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/votes/${code}`);
+      const { data } = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/votes/${code}`);
       setVote(data.result);
     } catch (error: any) {
       if (error.response?.data.code === 404) {
@@ -39,7 +39,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
 
   const getParticipantVote = async (code: string) => {
     try {
-      const { data } = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/participant/${code}`);
+      const { data } = await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/participant/${code}`);
       if (!data.result) return setIsVote(false);
       setIsVote(true);
     } catch (error: any) {
@@ -64,7 +64,7 @@ const Vote = ({ user }: { user: User | undefined }) => {
       return;
     }
     try {
-      await axios.post(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/participant`, {
+      await axios.post(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/participant`, {
         candidate: selectedOption,
         code: code,
       });

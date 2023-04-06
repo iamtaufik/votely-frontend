@@ -3,7 +3,7 @@ import restrictedBg from '../assets/restricted.svg';
 const Restricted = () => {
   const handleLogin = async () => {
     try {
-      window.open(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/auth/google`, '_self');
+      window.open(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/auth/google`, '_self');
     } catch (error: any) {
       console.log(error.message);
     }

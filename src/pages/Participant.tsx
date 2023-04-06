@@ -13,7 +13,7 @@ const Participant = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/votes/${code}`);
+      await axios.get(`${import.meta.env.MODE !== 'development' ? 'https://votely-api.vercel.app' : 'http://localhost:3000'}/api/votes/${code}`);
 
       navigate(`/participant/${code}`);
     } catch (error: any) {
