@@ -93,7 +93,7 @@ const Create = () => {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/votes', {
+      await axios.post(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/votes`, {
         title,
         startDateTime,
         endDateTime,

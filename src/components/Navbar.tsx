@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ user }: { user: any | undefined }) => {
   const handleLogin = async () => {
     try {
-      window.open('http://localhost:3000/api/auth/google', '_self');
+      window.open(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/auth/google`, '_self');
     } catch (error: any) {
       console.log(error.message);
     }
@@ -11,7 +11,7 @@ const Navbar = ({ user }: { user: any | undefined }) => {
 
   const handleLogout = async () => {
     try {
-      window.open('http://localhost:3000/api/auth/logout', '_self');
+      window.open(`${import.meta.env.MODE !== 'development' ? 'https://votely.api.vercel.app' : 'http://localhost:3000'}/api/auth/logout`, '_self');
       // getUser();
     } catch (error: any) {
       console.log(error.message);
